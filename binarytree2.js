@@ -26,11 +26,11 @@ var binaryTreeConstructor = {
 
 			for (var i = 1; i < arrStoreLen; i++) { //go from top to bottom - start at one so variable 'b' below can look at the item before item at index i (variable 'a')
 
-				var a = arrStore[i].ID; //get the identifier of item at index i
+				var a = arrStore[i]; //get the identifier of item at index i
 
-				var b = arrStore[i - 1].ID; //get identifier of item before variable 'a'
+				var b = arrStore[i - 1]; //get identifier of item before variable 'a'
 
-				var c  = a - b; //compare the two
+				var c  = a.ID - b.ID; //compare the two
 
 				if (c<0) { // if the item before is larger than the current item...
 					// ...swap positions
@@ -47,7 +47,6 @@ var binaryTreeConstructor = {
 		};
 		var initNode = Math.floor(arrStore.length * 0.5); //get the index of the middle node in the array
 		var zeroVar = String('0'); // variable set to string 0
-
 		dataStore.dataContainer[zeroVar] = {}; //initialize the first object in the binary dataStore
 		dataStore.dataContainer[zeroVar].dataValue = arrStore[initNode].ID; //add the middle node's ID from the array into the value container
 		dataStore.dataContainer[zeroVar]._source = arrStore[initNode]; //add the full object into the _source field
@@ -56,7 +55,6 @@ var binaryTreeConstructor = {
 		arrStore.splice(initNode, 1); //remove the middle node from the array as it has been added to the binary tree
 		dataStore._totalItemsAddedCount += 1; //increment the total items added count of the tree
 		dataStore._height += 1; //increment the height count of the tree
-
 		for (var i = 0; i < arrStore.length; i++) { //loop through every node to insert into the truee
 			var isMatch = false;
 			var $this = arrStore[i]; //get the node to be insertied
@@ -205,6 +203,7 @@ var binaryTreeConstructor = {
 		//*this will just remove all instances of the obj*
 		var dataStore = treeObject;
 		var endHitWithNoMatch = false; //init var that checks if the loop has run through and hit the end of a tree without an matches are left/ever existed
+		var noMachEverExisted = true; //errchecking
 		while(!endHitWithNoMatch) { //loop until all instances of objToRemove node are gone
 			var dataStoreTraversingIndex = 0; // index to count traversing point
 			var dataStoreTraversingIndex2 = -1; // index to count point before last tranversing point for removing left or right hand assignments and pointing them to next item
@@ -213,7 +212,12 @@ var binaryTreeConstructor = {
 			var isMatch = false; //keep going until match found
 			while(!isMatch) { // ^
 				var toBeScrutinized = dataStore.dataContainer[dataStoreTraversingIndex.toString()];
+				if (!toBeScrutinized) {
+					endHitWithNoMatch = true;
+					break;
+				};
 				if (objToRemove.ID == toBeScrutinized.dataValue) { //see if this node is the object that needs to be removed
+					noMachEverExisted = false;//errchecking
 					if (toBeScrutinized.leftHand) { // if there is a left hand of this node
 						if (dataStoreTraversingIndex2 > -1) { //if this isn't the top node of the tree
 							if (lastDirection == true) { //if the last direction the tree went to is the rightHand
@@ -256,10 +260,9 @@ var binaryTreeConstructor = {
 
 					};
 
-					delete dataStore.dataContainer.dataStoreTraversingIndex;
-					//comment out bottom two to remove all instances of obj rather than just the first
+					delete dataStore.dataContainer[dataStoreTraversingIndex.toString()];
 					isMatch = true;
-					break;//end loop and return altered tree
+					break;
 				}
 				else if(objToRemove.ID < toBeScrutinized.dataValue) {//if obj to remove is to the left of this item
 					dataStoreTraversingIndex2 = dataStoreTraversingIndex; //point to left and rerun while loop
@@ -283,6 +286,9 @@ var binaryTreeConstructor = {
 				};
 
 			};
+		};
+		if (noMachEverExisted) {
+			alert('No matches');
 		};
 		return dataStore;
 	}
@@ -351,10 +357,98 @@ var initDataValues = [
 
 //going to implement visualization and control codes below.
 
-var a = binaryTreeConstructor.createTreeWithArrayInput(initDataValues);
-console.log(a);
-var b = binaryTreeConstructor.searchTree(a, 11);
-console.log(b)
+
+function updateDisplayTree(thisDatr) {
+	$('h2').data("treeInfo", thisDatr);
+	var res1Len = thisDatr._totalItemsAddedCount;
+	$('.nodeItem').remove();
+	for (var i = 0; i < res1Len; i++) {
+		var $this = thisDatr.dataContainer[i.toString()];
+		if ($this) {
+			if ($this.dataValue) {
+				var htmlThing = '<div class="nodeItem" data-nodeIndex="'+ i +'" data-nodeIdentifier="'+ $this.dataValue +'" data-leftHand="'+$this.leftHand+'" data-rightHand="'+$this.rightHand+'" style="margin-left:'+Math.random()*700+'px"><span class="horPiece LH"></span><span class="verPiece LH"></span><span class="horPiece RH"></span><span class="verPiece RH"></span><p class="nodeIndexName">'+ i +'</p><div><p>ID: '+ $this.dataValue +'</p><span>otherData: '+ $this._source.otherData +'</span></div></div>';
+				$('body').append(htmlThing);
+			};
+		};
+	};
+	$('.nodeItem').each(function() {
+		var $thisInserted = $(this);
+		var $thisLeftHandNode = $('.nodeItem[data-nodeIndex="' + $thisInserted.attr('data-leftHand') + '"]');
+		var $thisRightHandNode = $('.nodeItem[data-nodeIndex="' + $thisInserted.attr('data-rightHand') + '"]');
+		if ($thisLeftHandNode.length) {
+			var horLH = $thisInserted.children('.horPiece.LH');
+			horLH.css('top', $thisInserted.offset().top);
+			horLH.width(Math.abs($thisLeftHandNode.offset().left - $thisInserted.offset().left));
+			if (($thisInserted.offset().left - $thisLeftHandNode.offset().left)>0) {
+				horLH.css({'left': $thisLeftHandNode.offset().left});
+				$thisInserted.children('.verPiece.LH').css('left', $thisLeftHandNode.offset().left);
+			}
+			else{
+				horLH.css({'left':  $thisInserted.offset().left});
+				$thisInserted.children('.verPiece.LH').css('left', $thisInserted.offset().left + horLH.outerWidth());
+			};
+			$thisInserted.children('.verPiece.LH').height(Math.abs($thisLeftHandNode.offset().top - $thisInserted.offset().top));
+			if (($thisLeftHandNode.offset().top - $thisInserted.offset().top)>0) {
+				$thisInserted.children('.verPiece.LH').css('top', $thisInserted.offset().top);
+			}
+			else{
+				$thisInserted.children('.verPiece.LH').css('top', $thisLeftHandNode.offset().top);
+			};
+		};
+		if ($thisRightHandNode.length) {
+			var horRH = $thisInserted.children('.horPiece.RH');
+			horRH.css('top', $thisInserted.offset().top);
+			horRH.width(Math.abs( ($thisRightHandNode.offset().left + $thisRightHandNode.outerWidth()) -  ($thisInserted.offset().left + $thisInserted.outerWidth()) ));
+			if (  (($thisRightHandNode.offset().left + $thisRightHandNode.outerWidth()) -  ($thisInserted.offset().left + $thisInserted.outerWidth())) > 0 ) {
+				horRH.css({'left': $thisInserted.outerWidth() + $thisInserted.offset().left});
+				$thisInserted.children('.verPiece.RH').css('left', $thisInserted.outerWidth() + $thisInserted.offset().left + horRH.outerWidth());
+			}
+			else{
+				horRH.css({'left': $thisRightHandNode.offset().left + $thisRightHandNode.outerWidth()});
+				$thisInserted.children('.verPiece.RH').css('left', $thisRightHandNode.offset().left + $thisRightHandNode.outerWidth());
+			};
+
+			$thisInserted.children('.verPiece.RH').css({'height': Math.abs($thisRightHandNode.offset().top - $thisInserted.offset().top)	});
+			if (($thisRightHandNode.offset().top - $thisInserted.offset().top)>0) {
+				$thisInserted.children('.verPiece.RH').css('top', $thisInserted.offset().top);
+			}
+			else{
+				$thisInserted.children('.verPiece.RH').css('top', $thisRightHandNode.offset().top);
+			};
+		};
+		
+
+	});	
+};
+
+updateDisplayTree(binaryTreeConstructor.createTreeWithArrayInput(initDataValues));
+
+$('button[name="add"]').click(function() {
+	var resToShowOnPage = $('h2').data('treeInfo');
+	var ID = parseInt($('input[name="ID"]').val());
+	if (!ID || ID == 'NaN') {return alert('Err. Invalid ID field')};
+	var otherData = $('input[name="otherData"]').val();
+	if (!otherData) {return alert('Err. No otherData field')};
+	var resToShowOnPage = binaryTreeConstructor.insertInTree(resToShowOnPage, {"ID": ID, "otherData": otherData});
+	if (!resToShowOnPage) {return alert('err')}
+		else{
+			updateDisplayTree(resToShowOnPage);
+			$('input[name="ID"], input[name="otherData"]').val('');
+		};
+});
+$('button[name="remove"]').click(function() {
+	var resToShowOnPage = $('h2').data('treeInfo');
+	var ID = parseInt($('input[name="IDremove"]').val());
+	if (!ID || ID == 'NaN') {return alert('Err. Invalid ID field')};
+	var resToShowOnPage = binaryTreeConstructor.removeFromTree(resToShowOnPage, {"ID": ID});
+	if (!resToShowOnPage) {return alert('err')}
+		else{
+			updateDisplayTree(resToShowOnPage);
+			$('input[name="IDremove"]').val('');
+		};
+});
+// var b = binaryTreeConstructor.searchTree(a, 11);
+// console.log(b)
 
 
 

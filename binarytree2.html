@@ -2,8 +2,98 @@
 <html>
 	<head>
 		<title>Binary Tree | Inspired by Raven Locke</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				overflow: auto;
+				padding-left: 200px;
+			}
+			body>h2{
+				margin-top: 24px;
+				font-size: 24px;
+				font-weight: normal;
+			}
+			body>p{
+				font-size: 18px;
+				margin-top: 6px;
+				margin-bottom: 24px;
+				padding-right: 200px;
+			}
+			.nodeItem{
+				width: 250px;
+				height: 100px;
+				background-color: #EBEBEB;
+				border-radius: 1px;
+				padding: 12px;
+				margin-top: 48px; margin-bottom: 48px;
+			}
+			.nodeIndexName{
+				color: #787878;
+				margin-top: 3px; margin-left: 3px;
+			}
+			.nodeItem>div{
+				background-color: white;
+				margin-top: 6px;
+				padding: 6px;
+			}
+			.nodeItem>div>p{
+				font-size: 24px;
+				text-align: center;
+			}
+			.nodeItem>div>span{
+				font-size: 12px;
+				text-align: center;
+				display: block;
+			}
+			.horPiece{
+				height: 3px;
+				display: block;
+				position: absolute;
+			}
+			.verPiece{
+				width: 3px;
+				display: block;
+				position: absolute;
+			}
+			.LH{
+				background-color: blue;
+				z-index: 500;
+				opacity: 0.3;
+			}
+			.RH{
+				background-color: red;
+				z-index: 500;
+				opacity: 0.3;
+			}
+		</style>
 	</head>
 	<body>
+		<h2>Visualization of the tree:</h2>
+		<p>From the top node, to get to the node you're looking for (by 'ID'), follow blue line if it is less than or equal to the node's ID you're looking at; and follow the red line if the node you're looking for has an ID greater than or equal to the ID of the node you're looking at.</p>
+		<input name="ID" type="number" placeholder="enter ID value">
+		<input name="otherData" type="text" placeholder="enter some other data to store">
+		<button name="add">Insert in tree</button>
+
+		<Br>
+
+		<input name="IDremove" type="number" placeholder="enter ID value">
+		<button name="remove">Remove from tree</button>
+
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="binarytree2.js"></script>
+		<!-- <div class="nodeItem" data-nodeIdentifier="">
+			<span class="horPiece LH"></span>
+			<span class="verPiece LH"></span>
+			<span class="horPiece RH"></span>
+			<span class="verPiece RH"></span>
+			<p class="nodeIndexName">1</p>
+			<div>
+				<p>node identifier</p>
+				<span>some node otherData</span>
+			</div>
+		</div> -->
 	</body>
 </html>
