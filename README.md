@@ -11,11 +11,11 @@
 
 
 ## Going to push soon
+* **Merge Sort** - currently working on
+* Quick Sort
 * BFS, DFS w. graph structs
 * Heap
 * Linked List
 * Stack
 * Queue
-* Merge Sort
-* Quick Sort
 * Trie
