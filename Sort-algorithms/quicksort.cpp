@@ -18,6 +18,7 @@ void recur(std::vector<int>&, long, long);
 
 void printVector(std::vector<int>&);
 
+int ctr(0);
 
 int main() {
     
@@ -26,7 +27,6 @@ int main() {
     std::vector<int> structToSort {43,43,43453,-673474,352528,393,79,36,134,16,62,255,-3452,-51};
     
     recur(structToSort, 0, structToSort.size()-1);
-    
     
     
     printVector(structToSort);
@@ -44,11 +44,10 @@ int main() {
 //the partition step
 long partitionStep(std::vector<int>& a, long s, long e) {
     unsigned int pivotI = (rand()%(e - s)) + s, l(s), r(e);
-    std::cout << pivotI << "piv " << a.at(pivotI) << ", s-" << s << ", e-" << e << std::endl;
     int pivotVal = a.at(pivotI);
     
     
-    while(l <= r) {
+    while(l < r) {
         bool lismet, rismet; lismet = rismet = false;
         while (!lismet) {
             if (a[l] >= pivotVal)
@@ -56,14 +55,12 @@ long partitionStep(std::vector<int>& a, long s, long e) {
             else
                 l++;
         };
-        std::cout << l << "-l-" << a[l] << std::endl;
         while (!rismet) {
             if (a[r] <= pivotVal)
                 rismet = true;
             else
                 r--;
         };
-        std::cout << r << "-r-" << a[r] << std::endl;
         
         if (a[l] == a[r])
             l++;
@@ -77,10 +74,8 @@ long partitionStep(std::vector<int>& a, long s, long e) {
     };
     
     
-    printVector(a);
     
-    
-    return l;
+    return r;
 };
 
 //the recursive quicksort call
