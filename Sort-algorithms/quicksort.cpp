@@ -18,7 +18,6 @@ void recur(std::vector<int>&, long, long);
 
 void printVector(std::vector<int>&);
 
-int ctr(0);
 
 int main() {
     
