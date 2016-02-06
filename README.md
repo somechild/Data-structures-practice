@@ -16,9 +16,7 @@ Gotta make the code more efficient though especially in terms of space complexit
 
 
 ## Going to push soon
-* **Heap** - currently working on
+* Heap
 * BFS, DFS w. graph structs
-* Linked List
-* Stack
-* Queue
+* **Linked List, Stack, Queue** - currently working on
 * Trie
