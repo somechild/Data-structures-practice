@@ -1,5 +1,5 @@
 //
-//  quicksort.cpp
+//  linkedlist.cpp
 //  DataStructs_Practice
 //
 //  Created by Jay Patel on 2016-01-30.
@@ -7,19 +7,40 @@
 //
 
 #include <iostream>
-#include <vector>
-#include <stdlib.h>
 
 
 
 
-void printVector(std::vector<int>&);
-
+class lItem {
+    
+public:
+    int value;
+    lItem** link;
+};
 
 int main() {
     
-    srand(time(0));
     
+    //array to init values with
+    int init[] = {1, 3, 24, 530, -3};
+    
+    
+    // create root item
+    lItem *root, *traverser;
+    root = new lItem; root -> value = init[0]; root -> link = 0;
+    
+    
+    
+    
+    // populate list on top of root item
+    traverser = root;
+    
+    
+    for (int i(1); i < 5; i++) {
+        lItem *newItem; newItem = new lItem; newItem -> value = init[i]; newItem -> link = 0;
+        traverser -> link = &newItem;
+        traverser = newItem;
+    };
     
     
     
@@ -27,14 +48,3 @@ int main() {
     return 0;
     
 }
-
-
-
-
-void printVector(std::vector<int>& v) {
-    std::cout << "-----------------------------------------\n";
-    for (long i = v.size(); i > 0; i--) {
-        std::cout << v[i-1] << ", ";
-    }
-    std::cout << "Done\n-----------------------------------------\n";
-};
