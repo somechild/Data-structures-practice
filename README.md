@@ -24,6 +24,6 @@ Basically use a vector in CPP and then the way you access/remove items changes b
 
 
 ## Going to push soon
-* *Heap* - up next
+* **Heap** - up next
 * BFS, DFS w. graph structs
 * Trie
