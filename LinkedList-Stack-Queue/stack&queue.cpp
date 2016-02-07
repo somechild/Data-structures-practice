@@ -1,5 +1,5 @@
 //
-//  quicksort.cpp
+//  stack&queue.cpp
 //  DataStructs_Practice
 //
 //  Created by Jay Patel on 2016-01-30.
@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <vector>
-#include <stdlib.h>
 
 
 
@@ -18,9 +17,42 @@ void printVector(std::vector<int>&);
 
 int main() {
     
-    srand(time(0));
+    std::vector<int> vectorToUse = {3, 23, 2424, 13991, 2};
     
     
+    // for either stack or queue you can use a vector ^
+    
+    
+    
+    
+    //**** STACK ******//
+    // to add items to stack ( ex. int(3) ) ->
+    
+    vectorToUse.push_back(3);
+    
+    
+    // to retrieve & remove items from stack ->
+    
+    int retrievedItem = vectorToUse.back();
+    vectorToUse.pop_back();
+    
+    
+    
+    //**** QUEUE ******//
+    // to add items to the queue ( ex. int(3) ) ->
+    vectorToUse.push_back(3);
+    
+    
+    // to retrieve & remove items from queue ->
+    
+    retrievedItem = vectorToUse.at(0);
+    vectorToUse.erase(vectorToUse.begin());
+    
+    
+    
+    
+    
+    printVector(vectorToUse);
     
     
     
