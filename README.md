@@ -15,8 +15,15 @@ Merge-sort & Quicksort have been done in CPP.
 Gotta make the code more efficient though especially in terms of space complexity and probably can also be improved slightly in terms of time complexity
 
 
+## Linked List
+Done in CPP with a simple class and pointers
+
+## Stack & Queue
+Basically use a vector in CPP and then the way you access/remove items changes by structure
+
+
+
 ## Going to push soon
-* Heap
+* **Heap** - up next
 * BFS, DFS w. graph structs
-* **Linked List, Stack, Queue** - currently working on
 * Trie
