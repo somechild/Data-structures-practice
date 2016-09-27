@@ -10,7 +10,9 @@
 *I still need to comment the jQuery stuff which sets up the visualization, but I'm  planning on having it visualized using the HTML5 canvas in the near future with animations and everything -- so maybe I'll just comment the stuff then
 
 ## Sorts
-Merge-sort & Quicksort have been done in CPP.
+Merge-sort & Quicksort have been done in CPP & JS.
+
+Counting sort done in JS
 
 Gotta make the code more efficient though especially in terms of space complexity and probably can also be improved slightly in terms of time complexity
 
@@ -21,10 +23,10 @@ Done in CPP with a simple class and pointers
 ## Stack & Queue
 Basically use a vector in CPP and then the way you access/remove items changes by structure
 
-
+## BFS & DFS
+Done in JS, gotta try out that iterative dfs
 
 ## Going to push soon
 * **Heap** - up next
 * AVL
-* BFS, DFS w. graph structs
 * Trie
